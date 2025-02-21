@@ -1,0 +1,65 @@
+
+body {
+    display: flex;
+    margin: 0;
+    overflow: hidden;
+    --sidebar-color: rgb(166, 87, 87);
+}
+
+#left-bar {
+    z-index: 3;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 200px;
+    transition: transform 0.2s;
+    background-color: var(--sidebar-color);
+}
+#left-bar.bar-collapsed {
+    transform: translate(-210px, 0);
+}
+
+#map {
+    margin: 0;
+    flex: 1;
+}
+
+#right-bar {
+    z-index: 3;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 200px;
+    transition: transform 0.2s;
+    background-color: var(--sidebar-color);
+}
+#right-bar.bar-collapsed {
+    transform: translate(210px, 0);
+}
+
+#right-bar > #upload {
+    width: 100%;
+}
+
+.hambrgr {
+    position: absolute;
+    border: 2px solid brown;
+}
+#right-bar > .hambrgr {
+    left: -110px;
+    width: 100px;
+}
+#left-bar > .hambrgr {
+    right: -110px;
+    width: 100px;
+}
+
+#leaflut {
+    box-sizing: border-box;
+    height: 100vh;
+    border: 3px solid magenta;
+    overflow: hidden;
+    z-index: 2;
+}

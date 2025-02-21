@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+  crossorigin=""></script>
+  <title>Renderer</title>
+</head>
+<body>
+  <div id="left-bar">
+    <button class="hambrgr" onclick="toggleLeftBar()">hambrgr</button>
+    Hellooo!!
+    <div id="node-list"></div>
+  </div>
+  <div id="map">
+    <div id="leaflut"></div>
+    <div id="node-view"></div>
+  </div>
+  <div id="right-bar">
+    <button class="hambrgr" onclick="toggleRightBar()">hambrgr</button>
+    <button>Upload</button>
+    <input id="upload" type="file" accept=".json" onchange="handleUpload()" />
+    <div id="file-name">No file selected</div>
+    <div id="display-options">
+      <label>
+        X: <input type="text" onchange="xChangeKey(this.value)" />
+      </label>
+      <label>
+        Y: <input type="text" onchange="yChangeKey(this.value)" />
+      </label>
+      <div>Additional fields</div>
+      <input type="text" placeholder="eg: name;color;birthday" />
+      <label id="connection-mode">
+        Connect Nodes
+        <input type="checkbox" />
+      </label>
+      <button id="delete-btn">Delete Selected</button>
+      <div id="new-property">
+        <button>Add Property</button>
+        <input type="text" placeholder="key" />
+        <input type="text" placeholder="value" />
+      </div>
+    </div>
+    <button id="export-btn">Export</button>
+  </div>
+  <script src="index.js"></script>
+</body>
+</html>
