@@ -63,3 +63,16 @@ body {
     overflow: hidden;
     z-index: 2;
 }
+
+#node-view button {
+    background: none;
+}
+
+#node-view .expanded {
+    background-color: red;
+}
+
+
+#node-view > div {
+    background-color: blue;
+}

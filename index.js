@@ -33,6 +33,12 @@ function yChangeKey(value) {
     renderMap();
 }
 
+function expandNode(id) {
+    const element = document.getElementById(`node-${id}`);
+    console.log("Expanding node", id);
+    element.classList.toggle("expanded");
+}
+
 function handleUpload() {
     const file = document.getElementById("upload").files[0];
     if (file) {
@@ -51,32 +57,54 @@ function handleUpload() {
 }
 
 function renderMap() {
+    map.remove()
+    map = L.map("leaflut").setView([44.975126, -93.235599], 17);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 21,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    const nodeList = document.getElementById("node-list");
+    const pathList = document.getElementById("path-list");
+    nodeList.innerHTML = "";
+    pathList.innerHTML = "";
+
     if (nodes.length === 0) return;
 
     for (const node of nodes) {
-        // default [44.975126, -93.235599]
-        // L.marker([node[yKey], node[xKey]]).addTo(map);
         L.circle([node[yKey], node[xKey]], {
-            // fillColor: "blue",
             fillOpacity: 0.5,
             radius: 1,
             stroke: true,
             weight: 5,
         }).addTo(map);
+
+        const listItem = `
+            <div id=node-${node.id}>
+                <button onclick="expandNode(${node.id})">
+                    ${node.name ?? "Node"}
+                </button>
+                <div>
+
+                </div>
+            </div>
+        `;
+
+        nodeList.innerHTML += listItem;
     }
 
     for (const path of paths) {
-        if (path.connected_to.length < 2) {
-            continue;
-        }
-        let firstNode = nodes[path.connected_to[0]];
-        let secondNode = nodes[path.connected_to[1]];
-        console.log("On path:", path);
-        console.log("Using nodes", firstNode, secondNode);
+        let firstNode = nodes.find(n => n.id === path.from);
+        let secondNode = nodes.find(n => n.id === path.to);
         L.polyline([
             [firstNode[yKey], firstNode[xKey]],
             [secondNode[yKey], secondNode[xKey]],
         ], {color: "red"}).addTo(map);
-        console.log("Finished drawing")
     }
 }
+
+console.log(`
+    View nodes or paths directly with:
+    console.log(nodes);
+    console.log(paths);
+`)
