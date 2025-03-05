@@ -9,49 +9,69 @@
     crossorigin=""
   />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-  crossorigin=""></script>
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
   <title>Renderer</title>
 </head>
 <body>
+  <!-- Left Sidebar -->
   <div id="left-bar">
-    <button class="hambrgr" onclick="toggleLeftBar()">hambrgr</button>
-    <button id="node-list-btn">Nodes v</button>
-    <div id="node-list"></div>
-    <button id="path-list-btn">Paths v</button>
-    <div id="path-list"></div>
+    <div id="left-bar-nodes">
+      <div style="text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;" id="node-list-title" class="list-title">Nodes (0)</div>
+      <div id="node-list"></div>
+    </div>
+    <div id="left-bar-paths">
+      <div style="text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;" id="path-list-title" class="list-title">Paths (0)</div>
+      <div id="path-list"></div>
+    </div>
   </div>
+
+  <!-- Map Container -->
   <div id="map">
     <div id="leaflut"></div>
     <div id="node-view"></div>
+    <div id="popup" class="popup">
+      <button id="close-popup" onclick="closePopup()">Close</button>
+      <button id="delete-popup" onclick="deletePopup()">Delete</button>
+    </div>
   </div>
+
+  <!-- Right Sidebar -->
   <div id="right-bar">
-    <button class="hambrgr" onclick="toggleRightBar()">hambrgr</button>
-    <button>Upload</button>
-    <input id="upload" type="file" accept=".json" onchange="handleUpload()" />
-    <div id="file-name">No file selected</div>
-    <div id="display-options">
-      <label>
-        X: <input type="text" onchange="xChangeKey(this.value)" />
-      </label>
-      <label>
-        Y: <input type="text" onchange="yChangeKey(this.value)" />
-      </label>
-      <div>Additional fields</div>
-      <input type="text" placeholder="eg: name;color;birthday" />
-      <label id="connection-mode">
-        Connect Nodes
-        <input type="checkbox" />
-      </label>
-      <button id="delete-btn">Delete Selected</button>
-      <div id="new-property">
-        <button>Add Property</button>
-        <input type="text" placeholder="key" />
-        <input type="text" placeholder="value" />
+    <input id="upload" type="file" accept=".json" onchange="handleUpload()" style="padding-left: 10px; color: white; text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000; padding-top: 20px;" />
+    <div style="padding-top: 20px; padding-left: 10px; color: white; text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;">
+      <label for="from-node">From:</label>
+      <input type="text" id="from-node" style="width: 40px;" />
+      <label for="to-node" style="padding-left: 10px;">To:</label>
+      <input type="text" id="to-node" style="width: 40px;" />
+      <div style="text-align: center;">
+        <button style="margin-top: 5px;" onclick="connectNodes()">Connect</button>
       </div>
     </div>
-    <button id="export-btn">Export</button>
+    <div style="padding-top: 20px; padding-left: 10px; color: white; text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;">
+      <label for="node-x">X:</label>
+      <input type="text" id="node-x" style="width: 60px;" />
+      <label for="node-y" style="padding-left: 10px;">Y:</label>
+      <input type="text" id="node-y" style="width: 60px;" />
+      <div style="text-align: center;">
+        <button style="margin-top: 5px;" onclick="addNode()">Add Node</button>
+      </div>
+    </div>
+    <div style="padding-top: 20px; padding-left: 10px">
+      <label for="export-destination">Export Destination:</label>
+      <input type="text" id="export-destination" placeholder="data/render_export" style="width: 100%;" />
+      <button style="margin-top: 5px;" onclick="openDirectoryPicker()">Choose Destination</button>
+      <button style="margin-top: 5px;" onclick="exportData()">Export</button>
+    </div>
   </div>
+
+  <!-- JavaScript -->
   <script src="index.js"></script>
+  <script>
+    window.addEventListener('beforeunload', function (e) {
+      e.preventDefault();
+      e.returnValue = 'Are you sure you want to leave? Changes you made may not be saved.';
+    });
+  </script>
 </body>
 </html>
